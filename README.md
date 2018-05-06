@@ -1,2 +1,2 @@
-# Yatzy spel med iOS
+# FUCK YOU Yatzy spel med iOS
 yatzy

@@ -1,2 +1,2 @@
-# yatzy
+# Yatzy spel med iOS
 yatzy

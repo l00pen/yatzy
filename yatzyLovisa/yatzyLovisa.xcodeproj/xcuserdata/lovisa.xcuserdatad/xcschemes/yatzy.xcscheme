@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "BB2860BC209F428300366B26"
-               BuildableName = "yatzy.app"
-               BlueprintName = "yatzy"
-               ReferencedContainer = "container:yatzy.xcodeproj">
+               BuildableName = "yatzyLovisa.app"
+               BlueprintName = "yatzyLovisa"
+               ReferencedContainer = "container:yatzyLovisa.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "BB2860D6209F428400366B26"
-               BuildableName = "yatzyTests.xctest"
-               BlueprintName = "yatzyTests"
-               ReferencedContainer = "container:yatzy.xcodeproj">
+               BuildableName = "yatzyLovisaTests.xctest"
+               BlueprintName = "yatzyLovisaTests"
+               ReferencedContainer = "container:yatzyLovisa.xcodeproj">
             </BuildableReference>
          </TestableReference>
          <TestableReference
@@ -43,9 +43,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "BB2860E1209F428400366B26"
-               BuildableName = "yatzyUITests.xctest"
-               BlueprintName = "yatzyUITests"
-               ReferencedContainer = "container:yatzy.xcodeproj">
+               BuildableName = "yatzyLovisaUITests.xctest"
+               BlueprintName = "yatzyLovisaUITests"
+               ReferencedContainer = "container:yatzyLovisa.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -53,9 +53,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "BB2860BC209F428300366B26"
-            BuildableName = "yatzy.app"
-            BlueprintName = "yatzy"
-            ReferencedContainer = "container:yatzy.xcodeproj">
+            BuildableName = "yatzyLovisa.app"
+            BlueprintName = "yatzyLovisa"
+            ReferencedContainer = "container:yatzyLovisa.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -76,9 +76,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "BB2860BC209F428300366B26"
-            BuildableName = "yatzy.app"
-            BlueprintName = "yatzy"
-            ReferencedContainer = "container:yatzy.xcodeproj">
+            BuildableName = "yatzyLovisa.app"
+            BlueprintName = "yatzyLovisa"
+            ReferencedContainer = "container:yatzyLovisa.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -95,9 +95,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "BB2860BC209F428300366B26"
-            BuildableName = "yatzy.app"
-            BlueprintName = "yatzy"
-            ReferencedContainer = "container:yatzy.xcodeproj">
+            BuildableName = "yatzyLovisa.app"
+            BlueprintName = "yatzyLovisa"
+            ReferencedContainer = "container:yatzyLovisa.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

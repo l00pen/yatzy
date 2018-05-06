@@ -37,7 +37,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		BB2860BD209F428400366B26 /* yatzy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = yatzy.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		BB2860BD209F428400366B26 /* yatzyLovisa.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = yatzyLovisa.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB2860C0209F428400366B26 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BB2860C2209F428400366B26 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
 		BB2860C4209F428400366B26 /* Actions.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Actions.sks; sourceTree = "<group>"; };
@@ -47,10 +47,10 @@
 		BB2860CD209F428400366B26 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BB2860D0209F428400366B26 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		BB2860D2209F428400366B26 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		BB2860D7209F428400366B26 /* yatzyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = yatzyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		BB2860D7209F428400366B26 /* yatzyLovisaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = yatzyLovisaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB2860DB209F428400366B26 /* yatzyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = yatzyTests.swift; sourceTree = "<group>"; };
 		BB2860DD209F428400366B26 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		BB2860E2209F428400366B26 /* yatzyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = yatzyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		BB2860E2209F428400366B26 /* yatzyLovisaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = yatzyLovisaUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB2860E6209F428400366B26 /* yatzyUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = yatzyUITests.swift; sourceTree = "<group>"; };
 		BB2860E8209F428400366B26 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -93,9 +93,9 @@
 		BB2860BE209F428400366B26 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				BB2860BD209F428400366B26 /* yatzy.app */,
-				BB2860D7209F428400366B26 /* yatzyTests.xctest */,
-				BB2860E2209F428400366B26 /* yatzyUITests.xctest */,
+				BB2860BD209F428400366B26 /* yatzyLovisa.app */,
+				BB2860D7209F428400366B26 /* yatzyLovisaTests.xctest */,
+				BB2860E2209F428400366B26 /* yatzyLovisaUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -137,9 +137,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		BB2860BC209F428300366B26 /* yatzy */ = {
+		BB2860BC209F428300366B26 /* yatzyLovisa */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = BB2860EB209F428400366B26 /* Build configuration list for PBXNativeTarget "yatzy" */;
+			buildConfigurationList = BB2860EB209F428400366B26 /* Build configuration list for PBXNativeTarget "yatzyLovisa" */;
 			buildPhases = (
 				BB2860B9209F428300366B26 /* Sources */,
 				BB2860BA209F428300366B26 /* Frameworks */,
@@ -149,14 +149,14 @@
 			);
 			dependencies = (
 			);
-			name = yatzy;
+			name = yatzyLovisa;
 			productName = yatzy;
-			productReference = BB2860BD209F428400366B26 /* yatzy.app */;
+			productReference = BB2860BD209F428400366B26 /* yatzyLovisa.app */;
 			productType = "com.apple.product-type.application";
 		};
-		BB2860D6209F428400366B26 /* yatzyTests */ = {
+		BB2860D6209F428400366B26 /* yatzyLovisaTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = BB2860EE209F428400366B26 /* Build configuration list for PBXNativeTarget "yatzyTests" */;
+			buildConfigurationList = BB2860EE209F428400366B26 /* Build configuration list for PBXNativeTarget "yatzyLovisaTests" */;
 			buildPhases = (
 				BB2860D3209F428400366B26 /* Sources */,
 				BB2860D4209F428400366B26 /* Frameworks */,
@@ -167,14 +167,14 @@
 			dependencies = (
 				BB2860D9209F428400366B26 /* PBXTargetDependency */,
 			);
-			name = yatzyTests;
+			name = yatzyLovisaTests;
 			productName = yatzyTests;
-			productReference = BB2860D7209F428400366B26 /* yatzyTests.xctest */;
+			productReference = BB2860D7209F428400366B26 /* yatzyLovisaTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		BB2860E1209F428400366B26 /* yatzyUITests */ = {
+		BB2860E1209F428400366B26 /* yatzyLovisaUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = BB2860F1209F428400366B26 /* Build configuration list for PBXNativeTarget "yatzyUITests" */;
+			buildConfigurationList = BB2860F1209F428400366B26 /* Build configuration list for PBXNativeTarget "yatzyLovisaUITests" */;
 			buildPhases = (
 				BB2860DE209F428400366B26 /* Sources */,
 				BB2860DF209F428400366B26 /* Frameworks */,
@@ -185,9 +185,9 @@
 			dependencies = (
 				BB2860E4209F428400366B26 /* PBXTargetDependency */,
 			);
-			name = yatzyUITests;
+			name = yatzyLovisaUITests;
 			productName = yatzyUITests;
-			productReference = BB2860E2209F428400366B26 /* yatzyUITests.xctest */;
+			productReference = BB2860E2209F428400366B26 /* yatzyLovisaUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -216,7 +216,7 @@
 					};
 				};
 			};
-			buildConfigurationList = BB2860B8209F428300366B26 /* Build configuration list for PBXProject "yatzy" */;
+			buildConfigurationList = BB2860B8209F428300366B26 /* Build configuration list for PBXProject "yatzyLovisa" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -229,9 +229,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				BB2860BC209F428300366B26 /* yatzy */,
-				BB2860D6209F428400366B26 /* yatzyTests */,
-				BB2860E1209F428400366B26 /* yatzyUITests */,
+				BB2860BC209F428300366B26 /* yatzyLovisa */,
+				BB2860D6209F428400366B26 /* yatzyLovisaTests */,
+				BB2860E1209F428400366B26 /* yatzyLovisaUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -297,12 +297,12 @@
 /* Begin PBXTargetDependency section */
 		BB2860D9209F428400366B26 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = BB2860BC209F428300366B26 /* yatzy */;
+			target = BB2860BC209F428300366B26 /* yatzyLovisa */;
 			targetProxy = BB2860D8209F428400366B26 /* PBXContainerItemProxy */;
 		};
 		BB2860E4209F428400366B26 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = BB2860BC209F428300366B26 /* yatzy */;
+			target = BB2860BC209F428300366B26 /* yatzyLovisa */;
 			targetProxy = BB2860E3209F428400366B26 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -454,7 +454,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = doubledab.yatzyTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/yatzy.app/yatzy";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/yatzyLovisa.app/yatzyLovisa";
 			};
 			name = Debug;
 		};
@@ -468,7 +468,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = doubledab.yatzyTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/yatzy.app/yatzy";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/yatzyLovisa.app/yatzyLovisa";
 			};
 			name = Release;
 		};
@@ -501,7 +501,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		BB2860B8209F428300366B26 /* Build configuration list for PBXProject "yatzy" */ = {
+		BB2860B8209F428300366B26 /* Build configuration list for PBXProject "yatzyLovisa" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				BB2860E9209F428400366B26 /* Debug */,
@@ -510,29 +510,32 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		BB2860EB209F428400366B26 /* Build configuration list for PBXNativeTarget "yatzy" */ = {
+		BB2860EB209F428400366B26 /* Build configuration list for PBXNativeTarget "yatzyLovisa" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				BB2860EC209F428400366B26 /* Debug */,
 				BB2860ED209F428400366B26 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
-		BB2860EE209F428400366B26 /* Build configuration list for PBXNativeTarget "yatzyTests" */ = {
+		BB2860EE209F428400366B26 /* Build configuration list for PBXNativeTarget "yatzyLovisaTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				BB2860EF209F428400366B26 /* Debug */,
 				BB2860F0209F428400366B26 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
-		BB2860F1209F428400366B26 /* Build configuration list for PBXNativeTarget "yatzyUITests" */ = {
+		BB2860F1209F428400366B26 /* Build configuration list for PBXNativeTarget "yatzyLovisaUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				BB2860F2209F428400366B26 /* Debug */,
 				BB2860F3209F428400366B26 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

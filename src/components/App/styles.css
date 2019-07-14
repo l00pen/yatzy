@@ -1,0 +1,23 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: #AC7587;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #77C06F;
+}
+
+.app {
+  width: 50%;
+  margin: 0 auto;
+  min-width: 680px;
+  min-height: 500px;
+}
+
+canvas {
+  background: #E6868B;
+  display: block;
+  margin: 0 auto;
+  border: 2px solid #77C06F;
+}

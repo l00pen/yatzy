@@ -8,16 +8,19 @@ body {
   color: #77C06F;
 }
 
-.app {
-  width: 50%;
-  margin: 0 auto;
-  min-width: 680px;
-  min-height: 500px;
-}
+.app {}
 
 canvas {
   background: #E6868B;
   display: block;
   margin: 0 auto;
   border: 2px solid #77C06F;
+}
+
+@media only screen and (min-width: 768px) {
+  .app {
+    width: 50%;
+    margin: 0 auto;
+    align-items: center;
+  }
 }

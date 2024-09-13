@@ -87,63 +87,67 @@ const Yatzy = ({
   };
 
   return (
-    <Container>
-      <Protocol>
-        {protocol.map((obj) => {
-          return (
-            <React.Fragment key={obj.label}>
-              <ProtocolKey
-                isBonusMissed={
-                  (obj.label === "bonus" || obj.label === "yatzyBonus") &&
-                  obj.isUsed &&
-                  obj.total === 0
-                }
-              >{`${obj.name}: `}</ProtocolKey>
-              <ProtocolValue
-                onClick={
-                  obj.disabled === true
-                    ? null
-                    : onProtocolValueClick.bind(this, obj)
-                }
-                isUsed={obj.isUsed}
-                isValid={obj.currentSum > 0}
-                disabled={obj.disabled}
-                isBonus={obj.label === "bonus" || obj.label === "yatzyBonus"}
-                isBonusMissed={
-                  (obj.label === "bonus" || obj.label === "yatzyBonus") &&
-                  obj.isUsed &&
-                  obj.total === 0
-                }
-              >
-                {obj.isUsed ? `${obj.total}` : `${obj.currentSum}`}
-              </ProtocolValue>
-            </React.Fragment>
-          );
-        })}
-      </Protocol>
-      <Wrapper>
-        <YatzyDashboard />
-        <div>
+    <div>
+      <YatzyDashboard />
+      <Container>
+        <Protocol>
+          {protocol.map((obj) => {
+            return (
+              <React.Fragment key={obj.label}>
+                <ProtocolKey
+                  isBonusMissed={
+                    (obj.label === "bonus" || obj.label === "yatzyBonus") &&
+                    obj.isUsed &&
+                    obj.total === 0
+                  }
+                >{`${obj.name}: `}</ProtocolKey>
+                <ProtocolValue
+                  onClick={
+                    obj.disabled === true
+                      ? null
+                      : onProtocolValueClick.bind(this, obj)
+                  }
+                  isUsed={obj.isUsed}
+                  isValid={obj.currentSum > 0}
+                  disabled={obj.disabled}
+                  isBonus={obj.label === "bonus" || obj.label === "yatzyBonus"}
+                  isBonusMissed={
+                    (obj.label === "bonus" || obj.label === "yatzyBonus") &&
+                    obj.isUsed &&
+                    obj.total === 0
+                  }
+                >
+                  {obj.isUsed ? `${obj.total}` : `${obj.currentSum}`}
+                </ProtocolValue>
+              </React.Fragment>
+            );
+          })}
+        </Protocol>
+        <Wrapper>
           <div>
-            <p>{availableRolls}</p>
-            <button onClick={rollDices} disabled={availableRolls === 0}>
-              Roll Dices
-            </button>
+            <div>
+              <p>{availableRolls}</p>
+              <button onClick={rollDices} disabled={availableRolls === 0}>
+                Roll Dices
+              </button>
+            </div>
           </div>
-        </div>
-        <DiceBoard>
-          {dices.map(({ id, value, shouldReRoll }, i) => (
-            <Dice
-              style={{ color: shouldReRoll ? "black" : "cyan" }}
-              key={`dice-${id}`}
-              onClick={diceClickHandler.bind(this, id)}
-              dangerouslySetInnerHTML={{ __html: `&#x268${value}` }}
-            />
-          ))}
-        </DiceBoard>
-        {gameFinished && <div>{`Game finished with a total of: ${total}`}</div>}
-      </Wrapper>
-    </Container>
+          <DiceBoard>
+            {dices.map(({ id, value, shouldReRoll }, i) => (
+              <Dice
+                style={{ color: shouldReRoll ? "black" : "cyan" }}
+                key={`dice-${id}`}
+                onClick={diceClickHandler.bind(this, id)}
+                dangerouslySetInnerHTML={{ __html: `&#x268${value}` }}
+              />
+            ))}
+          </DiceBoard>
+          {gameFinished && (
+            <div>{`Game finished with a total of: ${total}`}</div>
+          )}
+        </Wrapper>
+      </Container>
+    </div>
   );
 };
 

@@ -1,17 +1,12 @@
-import React from 'react';
-import styled from 'styled-components'
-import { connect } from 'react-redux';
+import React from "react";
+import styled from "styled-components";
+import { connect } from "react-redux";
 
-import {
-  getTotal,
-  getIsGameFinished,
-} from 'Reducers/yatzy/selectors';
+import { getTotal, getIsGameFinished } from "Reducers/yatzy/selectors";
 
 const Dashboard = styled.div`
-  background: gold;
+  background: grey;
   padding: 1em;
-  margin-bottom: 1em;
-
   display: flex;
   justify-content: space-between;
 `;
@@ -26,7 +21,7 @@ const YatzyDashboard = ({
 }) => {
   const newGameHandler = () => {
     onNewGameClick();
-  }
+  };
 
   React.useEffect(() => {
     if (gameFinished) {
@@ -42,15 +37,18 @@ const YatzyDashboard = ({
       </div>
       <div>
         {`Current highScore: `}
-        {highScore.map(({score, userName}) => (
+        {highScore.map(({ score, userName }) => (
           <div key={`${userName}: ${score}`}>{`${userName}: ${score}`}</div>
         ))}
       </div>
     </Dashboard>
   );
-}
+};
 
-const mapStateToProps = ({ yatzyReducer: yatzyState, userReducer: userState }) => {
+const mapStateToProps = ({
+  yatzyReducer: yatzyState,
+  userReducer: userState,
+}) => {
   return {
     ...yatzyState,
     ...yatzyState.yatzy,
@@ -59,25 +57,25 @@ const mapStateToProps = ({ yatzyReducer: yatzyState, userReducer: userState }) =
     gameFinished: getIsGameFinished(yatzyState),
     userName: userState.name,
   };
-}
+};
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
     onNewGameClick: () => {
       dispatch({
-        type: 'YATZY_NEW_GAME',
-      })
+        type: "YATZY_NEW_GAME",
+      });
     },
     gameFinishedHandler: (total, userName) => {
       dispatch({
-        type: 'YATZY_GAME_FINISHED',
+        type: "YATZY_GAME_FINISHED",
         data: {
           total,
           userName,
-        }
-      })
-    }
-  }
-}
+        },
+      });
+    },
+  };
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(YatzyDashboard);

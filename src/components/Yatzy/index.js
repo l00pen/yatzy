@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
-import styled from 'styled-components'
+import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
+import styled from "styled-components";
 
-import YatzyDashboard from 'Components/YatzyDashboard';
+import YatzyDashboard from "Components/YatzyDashboard";
 
 import {
   getCurrentRoundCombination,
   getCurrentProtocol,
   getTotal,
   getIsGameFinished,
-} from 'Reducers/yatzy/selectors';
+} from "Reducers/yatzy/selectors";
 
 const DiceBoard = styled.div`
   display: flex;
@@ -52,6 +52,8 @@ const ProtocolKey = styled.div`
   grid-column-start: 1;
   align-self: center;
   text-transform: capitalize;
+  text-decoration: ${(props) =>
+    props.isBonusMissed ? "line-through" : "none"};
 `;
 
 const ProtocolValue = styled.div`
@@ -60,42 +62,58 @@ const ProtocolValue = styled.div`
   grid-column-start: 2;
   text-align: end;
   align-self: center;
-  cursor: ${props => props.isUsed ? 'auto' : 'pointer' };
-  background: ${props => props.isUsed ? 'aliceblue' : props.isValid ? 'papayawhip' : 'white' };
+  cursor: ${(props) => (props.isUsed || props.isBonus ? "auto" : "pointer")};
+  background: ${(props) =>
+    props.isUsed ? "aliceblue" : props.isValid ? "papayawhip" : "white"};
+  text-decoration: ${(props) =>
+    props.isBonusMissed ? "line-through" : "none"};
 `;
 
 const Yatzy = ({
-    total,
-    dices,
-    rollDices,
-    availableRolls,
-    toggleDice,
-    combintationHelper,
-    setProtocolItemSum,
-    protocol,
-    highScore,
-    gameFinished,
-  }) => {  
-
+  total,
+  dices,
+  rollDices,
+  availableRolls,
+  toggleDice,
+  combintationHelper,
+  setProtocolItemSum,
+  protocol,
+  highScore,
+  gameFinished,
+}) => {
   const diceClickHandler = (id) => toggleDice(id);
   const onProtocolValueClick = (obj) => {
-    if (obj.label !== 'bonus') {
-      setProtocolItemSum(obj);
-    }
-  }
+    setProtocolItemSum(obj);
+  };
 
   return (
     <Container>
       <Protocol>
-        { protocol.map((obj) => {
+        {protocol.map((obj) => {
           return (
             <React.Fragment key={obj.label}>
-              <ProtocolKey>{`${obj.label}: `}</ProtocolKey>
+              <ProtocolKey
+                isBonusMissed={
+                  (obj.label === "bonus" || obj.label === "yatzyBonus") &&
+                  obj.isUsed &&
+                  obj.total === 0
+                }
+              >{`${obj.name}: `}</ProtocolKey>
               <ProtocolValue
-                onClick={onProtocolValueClick.bind(this, obj)}
+                onClick={
+                  obj.disabled === true
+                    ? null
+                    : onProtocolValueClick.bind(this, obj)
+                }
                 isUsed={obj.isUsed}
                 isValid={obj.currentSum > 0}
-                disabled={obj.label === 'bonus'}
+                disabled={obj.disabled}
+                isBonus={obj.label === "bonus" || obj.label === "yatzyBonus"}
+                isBonusMissed={
+                  (obj.label === "bonus" || obj.label === "yatzyBonus") &&
+                  obj.isUsed &&
+                  obj.total === 0
+                }
               >
                 {obj.isUsed ? `${obj.total}` : `${obj.currentSum}`}
               </ProtocolValue>
@@ -108,30 +126,28 @@ const Yatzy = ({
         <div>
           <div>
             <p>{availableRolls}</p>
-            <button onClick={rollDices} disabled={availableRolls === 0}>Roll Dices</button>
+            <button onClick={rollDices} disabled={availableRolls === 0}>
+              Roll Dices
+            </button>
           </div>
         </div>
         <DiceBoard>
-          { dices.map(({ id, value, shouldReRoll }, i) => (
+          {dices.map(({ id, value, shouldReRoll }, i) => (
             <Dice
-              style={{ color: shouldReRoll ? 'black' : 'cyan'}}
+              style={{ color: shouldReRoll ? "black" : "cyan" }}
               key={`dice-${id}`}
               onClick={diceClickHandler.bind(this, id)}
-              dangerouslySetInnerHTML={{ __html: `&#x268${value}`}}
+              dangerouslySetInnerHTML={{ __html: `&#x268${value}` }}
             />
           ))}
         </DiceBoard>
-        { gameFinished &&
-          <div>
-            {`Game finished with a total of: ${total}`}
-          </div>
-        }
+        {gameFinished && <div>{`Game finished with a total of: ${total}`}</div>}
       </Wrapper>
     </Container>
   );
-}
+};
 
-const mapStateToProps = ({ yatzyReducer: state}) => {
+const mapStateToProps = ({ yatzyReducer: state }) => {
   return {
     ...state,
     ...state.yatzy,
@@ -141,30 +157,30 @@ const mapStateToProps = ({ yatzyReducer: state}) => {
     total: getTotal(state),
     gameFinished: getIsGameFinished(state),
   };
-}
+};
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
     rollDices: () => {
       dispatch({
-        type: 'YATZY_ROLL_DICES'
-      })
+        type: "YATZY_ROLL_DICES",
+      });
     },
     toggleDice: (id) => {
       dispatch({
-        type: 'YATZY_TOGGLE_DICE',
+        type: "YATZY_TOGGLE_DICE",
         data: {
           id,
-        }
-      })
+        },
+      });
     },
     setProtocolItemSum: (protocolItem) => {
       dispatch({
-        type: 'YATZY_SET_PROTOCOL_ITEM_SUM',
-        data: { ...protocolItem }
+        type: "YATZY_SET_PROTOCOL_ITEM_SUM",
+        data: { ...protocolItem },
       });
     },
-  }
-}
+  };
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Yatzy);

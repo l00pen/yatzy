@@ -1,47 +1,46 @@
-const path = require('path');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
+const path = require("path");
+const CleanWebpackPlugin = require("clean-webpack-plugin");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
+const { clean } = require("gh-pages");
 
 module.exports = {
   entry: {
-    app: './src/index.js'
+    app: "./src/index.js",
   },
   resolve: {
     alias: {
-      Components: path.resolve(__dirname, 'src/components/'),
-      Reducers: path.resolve(__dirname, 'src/reducers/'),
-    }
+      Components: path.resolve(__dirname, "src/components/"),
+      Reducers: path.resolve(__dirname, "src/reducers/"),
+    },
+    extensions: ["", ".js", ".jsx"],
   },
   plugins: [
-    new CleanWebpackPlugin(['dist']),
     new HtmlWebpackPlugin({
-      title: 'Development',
-      template: 'src/index.html'
+      title: "Development",
+      template: "src/index.html",
     }),
     new CopyWebpackPlugin({
-      patterns: [
-        { from: 'public' }
-      ]
-    })
+      patterns: [{ from: "public" }],
+    }),
   ],
   module: {
     rules: [
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
-        use: {
-          loader: "babel-loader"
-        }
+
+        loader: "babel-loader",
       },
       {
         test: /\.css$/,
-        use: [ 'style-loader', 'css-loader' ]
-      }
-    ]
+        use: ["style-loader", "css-loader"],
+      },
+    ],
   },
   output: {
-    filename: '[name].bundle.js',
-    path: path.resolve(__dirname, 'dist')
-  }
+    filename: "[name].bundle.js",
+    path: path.resolve(__dirname, "dist"),
+    clean: true,
+  },
 };

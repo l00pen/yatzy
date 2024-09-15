@@ -2,8 +2,9 @@ import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
 
+import Box from "@mui/material/Box";
 import YatzyDashboard from "Components/YatzyDashboard";
-
+import Button from "@mui/material/Button";
 import {
   getCurrentRoundCombination,
   getCurrentProtocol,
@@ -13,10 +14,13 @@ import {
 
 const DiceBoard = styled.div`
   display: flex;
+  height: 5rem;
+  padding: 20px;
 `;
 
 const Dice = styled.div`
   font-size: 5rem;
+  line-height: 0;
   cursor: pointer;
 `;
 
@@ -26,8 +30,6 @@ const Wrapper = styled.div`
 `;
 
 const Container = styled.div`
-  font-size: 1em;
-  padding: 1em;
   background-color: white;
   margin: 0 auto;
   display: flex;
@@ -87,7 +89,7 @@ const Yatzy = ({
   };
 
   return (
-    <div>
+    <Box>
       <YatzyDashboard />
       <Container>
         <Protocol>
@@ -127,9 +129,13 @@ const Yatzy = ({
           <div>
             <div>
               <p>{availableRolls}</p>
-              <button onClick={rollDices} disabled={availableRolls === 0}>
+              <Button
+                variant="contained"
+                onClick={rollDices}
+                disabled={availableRolls === 0}
+              >
                 Roll Dices
-              </button>
+              </Button>
             </div>
           </div>
           <DiceBoard>
@@ -147,7 +153,7 @@ const Yatzy = ({
           )}
         </Wrapper>
       </Container>
-    </div>
+    </Box>
   );
 };
 
@@ -179,6 +185,7 @@ const mapDispatchToProps = (dispatch) => {
       });
     },
     setProtocolItemSum: (protocolItem) => {
+      console.log("setProtocolItemSum", protocolItem);
       dispatch({
         type: "YATZY_SET_PROTOCOL_ITEM_SUM",
         data: { ...protocolItem },

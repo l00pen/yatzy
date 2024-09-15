@@ -1,4 +1,5 @@
 import { createSelector } from "reselect";
+import { UPPER_SECTION, validate, calculateSum } from "../protocol";
 
 const getDices = (state) => {
   return state.dices;
@@ -16,11 +17,10 @@ const getCurrentRoundCombination = createSelector([getDices], (dices) => {
   return cb;
 });
 
-const getBonus = createSelector([getProtocol], (protocol, state) => {
+const getBonus = (protocol) => {
   let total = 0;
   let currentSum = -63;
   let isUsed = false;
-  const UPPER_SECTION = ["ones", "twos", "threes", "fours", "fives", "sixes"];
 
   const currentTotal = UPPER_SECTION.reduce((mem, key) => {
     return mem + protocol[key].total;
@@ -53,9 +53,9 @@ const getBonus = createSelector([getProtocol], (protocol, state) => {
     label: "bonus",
     currentSum,
   };
-});
+};
 
-const getYatzyBonus = createSelector([getProtocol], (protocol) => {
+const getYatzyBonus = (protocol) => {
   if (protocol["yatzy"].isUsed) {
     return {
       ...protocol.yatzyBonus,
@@ -69,25 +69,27 @@ const getYatzyBonus = createSelector([getProtocol], (protocol) => {
     label: "yatzyBonus",
     currentSum: 0,
   };
-});
+};
 
 const getCurrentProtocol = createSelector(
-  [getCurrentRoundCombination, getBonus, getYatzyBonus, getProtocol],
-  (combintationHelper, bonus, yatzyBonus, state) => {
-    return Object.keys(state).map((key) => {
-      const item = state[key];
+  [getCurrentRoundCombination, getProtocol],
+  (combintationHelper, protocol) => {
+    return Object.keys(protocol).map((key) => {
+      const item = protocol[key];
       if (key === "bonus") {
-        return bonus;
+        return getBonus(protocol);
       }
       if (key === "yatzyBonus") {
-        return yatzyBonus;
+        return getYatzyBonus(protocol);
       }
       if (!item.used) {
+        const isValid = validate(item.validationRule, combintationHelper);
+        const currentSum = calculateSum(item.sumRule, combintationHelper);
         return {
           ...item,
           label: key,
-          isValid: item.valid(combintationHelper),
-          currentSum: item.sum(combintationHelper),
+          isValid: isValid,
+          currentSum: isValid ? currentSum : 0,
         };
       }
       return {
@@ -101,7 +103,6 @@ const getCurrentProtocol = createSelector(
 const getTotal = createSelector([getCurrentProtocol], (state) => {
   return state.reduce((sum, currentItem) => {
     const tmp = currentItem.total ?? 0;
-    console.log(tmp);
     return sum + tmp;
   }, 0);
 });
@@ -116,6 +117,5 @@ export {
   getCurrentRoundCombination,
   getCurrentProtocol,
   getTotal,
-  getBonus,
   getIsGameFinished,
 };

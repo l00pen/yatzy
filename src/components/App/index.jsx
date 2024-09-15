@@ -1,17 +1,19 @@
 import React from "react";
-import Dashboard from "Components/Dashboard";
 import { connect } from "react-redux";
 
 import Yatzy from "Components/Yatzy";
 
-import "./styles.css";
+import CssBaseline from '@mui/material/CssBaseline';
+import Container from '@mui/material/Container';
 
 const App = ({ user }) => {
   return (
-    <div className={"app"}>
-      <Dashboard user={user} />
-      <Yatzy />
-    </div>
+    <>
+      <CssBaseline />
+      <Container maxWidth="sm">
+        <Yatzy />
+      </Container>
+    </>
   );
 };
 

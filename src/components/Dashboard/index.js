@@ -1,10 +1,8 @@
-import React from 'react';
-import Game from 'Components/Yatzy';
-import User from 'Components/User';
-import { connect } from 'react-redux';
-import { newUser } from '../../actions/userActions';
+import React from "react";
+import { connect } from "react-redux";
+import { newUser } from "../../actions/userActions";
 
-import './styles.css';
+import Box from "@mui/material/Box";
 
 class Dashboard extends React.Component {
   constructor() {
@@ -18,28 +16,12 @@ class Dashboard extends React.Component {
   }
 
   render() {
-    const { user } = this.props; 
-    return (
-      <div className={'dashboard'}>
-        <h1>{`Hi ${user.name}`}</h1>
-        <div className={'dashboard__buttonGroup'}>
-          <button
-            className={'dashboard__button'}
-            onClick={this.newUserHandler}
-          >
-            New User
-          </button>
-        </div>
-      </div>
-    );
+    return <Box></Box>;
   }
 }
 
 const mapStateToProps = (state) => {
-  return {
-    game: state.gameReducer,
-    user: state.userReducer,
-  };
+  return {};
 };
 
 export default connect(mapStateToProps)(Dashboard);

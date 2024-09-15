@@ -1,13 +1,10 @@
-import { combineReducers, applyMiddleware, createStore, compose } from 'redux';
-import thunk from './middleware/redux-thunk';
+import { combineReducers, applyMiddleware, compose } from "redux";
+import { configureStore } from "@reduxjs/toolkit";
+import thunk from "./middleware/redux-thunk";
 
-import game from './reducers/game';
-import user from './reducers/user';
-import yatzy from './reducers/yatzy';
+import yatzy from "./reducers/yatzy";
 
 const rootReducer = combineReducers({
-  gameReducer: game,
-  userReducer: user,
   yatzyReducer: yatzy,
 });
 
@@ -20,13 +17,17 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 export default {
   get(initialState = {}) {
     if (!store) {
-      store = createStore(
-        rootReducer,
-        initialState,
-        composeEnhancers(applyMiddleware(...middlewares)),
-      );
+      store = configureStore({
+        reducer: rootReducer,
+        preloadedState: initialState,
+        middleware: (getDefaultMiddleware) => {
+          return getDefaultMiddleware({
+            // serializableCheck: false,
+          }).concat(...middlewares);
+        },
+      });
     }
 
     return store;
-  }
+  },
 };

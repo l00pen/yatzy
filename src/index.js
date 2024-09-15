@@ -1,21 +1,25 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
-import Store from './store';
-import { loadState, saveState } from './reducers/localStorage';
+import React from "react";
+import ReactDOM from "react-dom";
+import { Provider } from "react-redux";
+import Store from "./store";
+import { createRoot } from "react-dom/client";
+import { loadHighScore } from "Reducers/yatzy/localStorage";
 
-import App from 'Components/App';
+import App from "Components/App";
 
-// const persistedState = loadState();
-const store = Store.get();
-
-store.subscribe(() => {
-  saveState(store.getState());
+const persistedHighscore = loadHighScore();
+const store = Store.get({
+  yatzyReducer: {
+    highScore: persistedHighscore,
+  },
 });
 
-ReactDOM.render(
+// store.subscribe(() => {});
+
+const container = document.getElementById("app");
+const root = createRoot(container); // createRoot(container!) if you use TypeScript
+root.render(
   <Provider store={store}>
     <App />
-  </Provider>,
-  document.getElementById('app')
+  </Provider>
 );

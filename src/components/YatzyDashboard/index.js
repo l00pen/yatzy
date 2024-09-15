@@ -1,15 +1,9 @@
 import React from "react";
-import styled from "styled-components";
 import { connect } from "react-redux";
-
 import { getTotal, getIsGameFinished } from "Reducers/yatzy/selectors";
 
-const Dashboard = styled.div`
-  background: grey;
-  padding: 1em;
-  display: flex;
-  justify-content: space-between;
-`;
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
 
 const YatzyDashboard = ({
   total,
@@ -17,7 +11,6 @@ const YatzyDashboard = ({
   highScore,
   gameFinished,
   gameFinishedHandler,
-  userName,
 }) => {
   const newGameHandler = () => {
     onNewGameClick();
@@ -25,37 +18,38 @@ const YatzyDashboard = ({
 
   React.useEffect(() => {
     if (gameFinished) {
-      gameFinishedHandler(total, userName);
+      gameFinishedHandler(total);
     }
   }, [gameFinished]);
 
   return (
-    <Dashboard>
+    <Box>
       <div>
         <div>{`Total: ${total}`}</div>
-        <button onClick={newGameHandler}>New game</button>
+        <Button variant="outlined" onClick={newGameHandler}>
+          {"New game"}
+        </Button>
       </div>
       <div>
-        {`Current highScore: `}
-        {highScore.map(({ score, userName }) => (
-          <div key={`${userName}: ${score}`}>{`${userName}: ${score}`}</div>
-        ))}
+        {`Current High Score: `}
+        {/* {highScore.length > 0
+          ? highScore.map(({ score }) => (
+              <div key={`${score}`}>{`${score}`}</div>
+            ))
+          : { highScore }} */}
       </div>
-    </Dashboard>
+    </Box>
   );
 };
 
-const mapStateToProps = ({
-  yatzyReducer: yatzyState,
-  userReducer: userState,
-}) => {
+const mapStateToProps = (state) => {
+  const { yatzyReducer: yatzyState } = state;
   return {
     ...yatzyState,
     ...yatzyState.yatzy,
     highScore: yatzyState.highScore,
     total: getTotal(yatzyState),
     gameFinished: getIsGameFinished(yatzyState),
-    userName: userState.name,
   };
 };
 
@@ -66,12 +60,11 @@ const mapDispatchToProps = (dispatch) => {
         type: "YATZY_NEW_GAME",
       });
     },
-    gameFinishedHandler: (total, userName) => {
+    gameFinishedHandler: (total) => {
       dispatch({
         type: "YATZY_GAME_FINISHED",
         data: {
           total,
-          userName,
         },
       });
     },

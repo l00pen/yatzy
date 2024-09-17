@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
 
@@ -6,16 +6,16 @@ import Box from "@mui/material/Box";
 import YatzyDashboard from "Components/YatzyDashboard";
 import Button from "@mui/material/Button";
 import {
-  getCurrentRoundCombination,
   getCurrentProtocol,
   getTotal,
   getIsGameFinished,
 } from "Reducers/yatzy/selectors";
 
-const DiceBoard = styled.div`
+const DiceGroup = styled.div`
   display: flex;
   height: 5rem;
-  padding: 20px;
+  padding-top: 18px;
+  justify-content: space-between;
 `;
 
 const Dice = styled.div`
@@ -30,45 +30,54 @@ const Wrapper = styled.div`
 `;
 
 const Container = styled.div`
-  background-color: white;
+  background-color: rgba(255, 255, 255, 0.5);
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
+  border-radius: 10px;
+  border: 1px solid #fff;
+  padding: 1em;
 `;
 
 const Protocol = styled.div`
   display: grid;
   grid-template-columns: auto 50px;
-  border: 1px solid #000;
-  grid-gap: 1px;
-`;
-
-const ProtocolItem = styled.div`
-  grid-column-start: 1;
-  grid-column-end: 2;
+  border: none;
+  grid-gap: 5px;
 `;
 
 const ProtocolKey = styled.div`
   border: 1px solid aliceblue;
+  border-radius: 5px;
   padding: 0.5em;
   grid-column-start: 1;
   align-self: center;
   text-transform: capitalize;
   text-decoration: ${(props) =>
     props.isBonusMissed ? "line-through" : "none"};
+  background: ${(props) =>
+    props.isUsed ? "rgba(255, 255, 255, 0.4)" : "aliceblue"};
+  color: ${(props) => (props.isUsed ? "white" : "black")};
 `;
 
 const ProtocolValue = styled.div`
   padding: 0.5em;
   border: 1px solid aliceblue;
+  border-radius: 5px;
   grid-column-start: 2;
   text-align: end;
   align-self: center;
   cursor: ${(props) => (props.isUsed || props.isBonus ? "auto" : "pointer")};
   background: ${(props) =>
-    props.isUsed ? "aliceblue" : props.isValid ? "papayawhip" : "white"};
+    props.isUsed
+      ? "rgba(255, 255, 255, 0.4)"
+      : props.isValid
+      ? "papayawhip"
+      : "aliceblue"};
   text-decoration: ${(props) =>
     props.isBonusMissed ? "line-through" : "none"};
+  color: ${(props) =>
+    props.isUsed ? "white" : props.isValid ? "purple" : "black"};
 `;
 
 const Yatzy = ({
@@ -77,10 +86,8 @@ const Yatzy = ({
   rollDices,
   availableRolls,
   toggleDice,
-  combintationHelper,
   setProtocolItemSum,
   protocol,
-  highScore,
   gameFinished,
 }) => {
   const diceClickHandler = (id) => toggleDice(id);
@@ -102,6 +109,7 @@ const Yatzy = ({
                     obj.isUsed &&
                     obj.total === 0
                   }
+                  isUsed={obj.isUsed}
                 >{`${obj.name}: `}</ProtocolKey>
                 <ProtocolValue
                   onClick={
@@ -126,30 +134,35 @@ const Yatzy = ({
           })}
         </Protocol>
         <Wrapper>
-          <div>
-            <div>
-              <p>{availableRolls}</p>
-              <Button
-                variant="contained"
-                onClick={rollDices}
-                disabled={availableRolls === 0}
-              >
-                Roll Dices
-              </Button>
-            </div>
-          </div>
-          <DiceBoard>
+          <DiceGroup>
             {dices.map(({ id, value, shouldReRoll }, i) => (
               <Dice
-                style={{ color: shouldReRoll ? "black" : "cyan" }}
+                style={{ color: shouldReRoll ? "#430043" : "papayawhip" }}
                 key={`dice-${id}`}
                 onClick={diceClickHandler.bind(this, id)}
                 dangerouslySetInnerHTML={{ __html: `&#x268${value}` }}
               />
             ))}
-          </DiceBoard>
+          </DiceGroup>
+          <div
+            style={{
+              paddingTop: "20px",
+            }}
+          >
+            <Button
+              variant="contained"
+              onClick={rollDices}
+              disabled={availableRolls === 0 || gameFinished}
+              fullWidth={true}
+            >
+              {`Roll dices (${availableRolls})`}
+            </Button>
+          </div>
+
           {gameFinished && (
-            <div>{`Game finished with a total of: ${total}`}</div>
+            <div
+              style={{ color: "white" }}
+            >{`Game finished with a total of: ${total}`}</div>
           )}
         </Wrapper>
       </Container>
@@ -162,7 +175,6 @@ const mapStateToProps = ({ yatzyReducer: state }) => {
     ...state,
     ...state.yatzy,
     ...state.highScore,
-    combintationHelper: getCurrentRoundCombination(state),
     protocol: getCurrentProtocol(state),
     total: getTotal(state),
     gameFinished: getIsGameFinished(state),
@@ -185,7 +197,6 @@ const mapDispatchToProps = (dispatch) => {
       });
     },
     setProtocolItemSum: (protocolItem) => {
-      console.log("setProtocolItemSum", protocolItem);
       dispatch({
         type: "YATZY_SET_PROTOCOL_ITEM_SUM",
         data: { ...protocolItem },

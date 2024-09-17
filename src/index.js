@@ -7,6 +7,9 @@ import { loadHighScore } from "Reducers/yatzy/localStorage";
 
 import App from "Components/App";
 
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+
+const theme = createTheme();
 const persistedHighscore = loadHighScore();
 const store = Store.get({
   yatzyReducer: {
@@ -20,6 +23,8 @@ const container = document.getElementById("app");
 const root = createRoot(container); // createRoot(container!) if you use TypeScript
 root.render(
   <Provider store={store}>
-    <App />
+    <ThemeProvider theme={theme}>
+      <App />
+    </ThemeProvider>
   </Provider>
 );

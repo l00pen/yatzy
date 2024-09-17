@@ -4,9 +4,13 @@ import { connect } from "react-redux";
 import Yatzy from "Components/Yatzy";
 
 import CssBaseline from '@mui/material/CssBaseline';
-import Container from '@mui/material/Container';
+import { Container, useMediaQuery, useTheme } from '@mui/material';
 
-const App = ({ user }) => {
+
+const App = ({ }) => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
   return (
     <>
       <CssBaseline />
@@ -43,7 +47,7 @@ const App = ({ user }) => {
         height: '100vh',
         paddingBottom: '100px',   
       }}>
-      <Container maxWidth="sm" >
+      <Container maxWidth={isMobile ? 'lg'  : 'sm'} >
         <Yatzy />
       </Container>
         </div>
@@ -54,7 +58,7 @@ const App = ({ user }) => {
 
 const mapStateToProps = (state) => {
   return {
-    user: state.userReducer,
+
   };
 };
 

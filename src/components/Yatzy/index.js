@@ -58,6 +58,7 @@ const ProtocolKey = styled.div`
   background: ${(props) =>
     props.isUsed ? "rgba(255, 255, 255, 0.4)" : "aliceblue"};
   color: ${(props) => (props.isUsed ? "white" : "black")};
+  text-wrap: nowrap;
 `;
 
 const ProtocolValue = styled.div`

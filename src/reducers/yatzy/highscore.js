@@ -10,7 +10,7 @@ const highScore = (state = initialState, action) => {
       if (hasNewHighScore) {
         saveHighScore(potHighScore);
       }
-      return action.data.total;
+      return state;
     default:
       return state;
   }

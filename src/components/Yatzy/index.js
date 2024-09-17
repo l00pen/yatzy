@@ -4,6 +4,7 @@ import styled from "styled-components";
 
 import Box from "@mui/material/Box";
 import YatzyDashboard from "Components/YatzyDashboard";
+import DiceFace from "Components/DiceFace.jsx";
 import Button from "@mui/material/Button";
 import {
   getCurrentProtocol,
@@ -13,15 +14,8 @@ import {
 
 const DiceGroup = styled.div`
   display: flex;
-  height: 5rem;
-  padding-top: 18px;
-  justify-content: space-between;
-`;
-
-const Dice = styled.div`
-  font-size: 5rem;
-  line-height: 0;
-  cursor: pointer;
+  justify-content: start;
+  flex-wrap: wrap;
 `;
 
 const Wrapper = styled.div`
@@ -81,6 +75,23 @@ const ProtocolValue = styled.div`
     props.isUsed ? "white" : props.isValid ? "purple" : "black"};
 `;
 
+const Overlay = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 1.5em;
+  opacity: ${(props) => (props.isVisible ? 1 : 0)};
+  transition: opacity 0.5s ease-in-out;
+  pointer-events: ${(props) => (props.isVisible ? "auto" : "none")};
+`;
+
 const Yatzy = ({
   total,
   dices,
@@ -90,7 +101,11 @@ const Yatzy = ({
   setProtocolItemSum,
   protocol,
   gameFinished,
+  onNewGameClick,
 }) => {
+  const newGameHandler = () => {
+    onNewGameClick();
+  };
   const diceClickHandler = (id) => toggleDice(id);
   const onProtocolValueClick = (obj) => {
     setProtocolItemSum(obj);
@@ -137,11 +152,12 @@ const Yatzy = ({
         <Wrapper>
           <DiceGroup>
             {dices.map(({ id, value, shouldReRoll }, i) => (
-              <Dice
-                style={{ color: shouldReRoll ? "#430043" : "papayawhip" }}
+              <DiceFace
                 key={`dice-${id}`}
+                value={value + 1}
                 onClick={diceClickHandler.bind(this, id)}
-                dangerouslySetInnerHTML={{ __html: `&#x268${value}` }}
+                size="100px"
+                shouldReRoll={shouldReRoll}
               />
             ))}
           </DiceGroup>
@@ -159,23 +175,27 @@ const Yatzy = ({
               {`Roll dices (${availableRolls})`}
             </Button>
           </div>
-
-          {gameFinished && (
-            <div
-              style={{ color: "white" }}
-            >{`Game finished with a total of: ${total}`}</div>
-          )}
         </Wrapper>
+
+        <Overlay isVisible={gameFinished}>
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            <div
+              style={{ marginBottom: "20px" }}
+            >{`🏆 Well played! You scored: ${total} 🎯`}</div>
+            <Button variant="contained" onClick={newGameHandler}>
+              {"New game"}
+            </Button>
+          </div>
+        </Overlay>
       </Container>
     </Box>
   );
 };
 
 const mapStateToProps = ({ yatzyReducer: state }) => {
+  console.log(state);
   return {
     ...state,
-    ...state.yatzy,
-    ...state.highScore,
     protocol: getCurrentProtocol(state),
     total: getTotal(state),
     gameFinished: getIsGameFinished(state),
@@ -184,6 +204,11 @@ const mapStateToProps = ({ yatzyReducer: state }) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    onNewGameClick: () => {
+      dispatch({
+        type: "YATZY_NEW_GAME",
+      });
+    },
     rollDices: () => {
       dispatch({
         type: "YATZY_ROLL_DICES",

@@ -66,8 +66,6 @@ const mapStateToProps = (state) => {
   const { yatzyReducer: yatzyState } = state;
   return {
     ...yatzyState,
-    ...yatzyState.yatzy,
-    highScore: yatzyState.highScore,
     total: getTotal(yatzyState),
     gameFinished: getIsGameFinished(yatzyState),
   };

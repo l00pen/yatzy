@@ -4,37 +4,24 @@ import dices from "./dices";
 import protocol from "./protocol";
 import highScore from "./highScore";
 
-const initialState = {
-  availableRolls: 2,
-};
+const initialState = 2;
 
-const yatzy = (state = initialState, action) => {
+const availableRolls = (state = initialState, action) => {
   switch (action.type) {
     case "NEW_USER":
     case "YATZY_NEW_GAME":
-      return {
-        ...initialState,
-      };
-    case "YATZY_ROLL_DICES":
-      return {
-        ...state,
-        availableRolls: state.availableRolls - 1,
-      };
     case "YATZY_SET_PROTOCOL_ITEM_SUM":
-      return {
-        ...state,
-        availableRolls: initialState.availableRolls,
-      };
-    case "YATZY_GAME_FINISHED":
-      return state;
+      return initialState;
+    case "YATZY_ROLL_DICES":
+      return state - 1;
+
     default:
       return state;
   }
-  return state;
 };
 
 export default combineReducers({
-  yatzy,
+  availableRolls,
   dices,
   protocol,
   highScore,

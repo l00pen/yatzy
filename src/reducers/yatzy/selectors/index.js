@@ -30,18 +30,13 @@ const getBonus = (protocol) => {
     return mem && protocol[key].isUsed;
   }, true);
 
-  if (allUpperHaveBeenUsed) {
+  if (allUpperHaveBeenUsed || currentTotal >= 63) {
+    isUsed = true;
     if (currentTotal >= 63) {
       total = 50;
     } else {
       total = 0;
     }
-    return {
-      ...protocol.bonus,
-      label: "bonus",
-      isUsed: true,
-      total,
-    };
   }
 
   if (!isUsed) {
@@ -52,6 +47,8 @@ const getBonus = (protocol) => {
     ...protocol.bonus,
     label: "bonus",
     currentSum,
+    total,
+    isUsed,
   };
 };
 

@@ -263,7 +263,6 @@ const initialState = () => {
 
 const protocol = (state = initialState(), action) => {
   switch (action.type) {
-    case "NEW_USER":
     case "YATZY_NEW_GAME":
       return initialState();
     case "YATZY_SET_PROTOCOL_ITEM_SUM":

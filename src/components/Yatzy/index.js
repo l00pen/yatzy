@@ -19,46 +19,55 @@ const DiceGroup = styled.div`
 `;
 
 const Wrapper = styled.div`
-  flex: 2;
+  flex: 1;
   margin-left: 1em;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 `;
 
 const Container = styled.div`
-  background-color: rgba(255, 255, 255, 0.5);
+  // background-color: rgba(255, 255, 255, 0.5);
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
-  border-radius: 10px;
-  border: 1px solid #fff;
-  padding: 1em;
+  // border-radius: 10px;
+  // border: 1px solid #fff;
+  // padding: 1em;
 `;
 
 const Protocol = styled.div`
   display: grid;
-  grid-template-columns: auto 50px;
+  grid-template-columns: auto 2.5rem;
   border: none;
-  grid-gap: 5px;
+  // grid-gap: 5px;
+  border-radius: 5px;
 `;
 
 const ProtocolKey = styled.div`
   border: 1px solid aliceblue;
-  border-radius: 5px;
-  padding: 0.5em;
+  // border-radius: 5px;
+  padding: 0.3em;
   grid-column-start: 1;
   align-self: center;
   text-transform: capitalize;
   text-decoration: ${(props) =>
     props.isBonusMissed ? "line-through" : "none"};
   background: ${(props) =>
-    props.isUsed ? "rgba(255, 255, 255, 0.4)" : "aliceblue"};
+    props.isUsed
+      ? "rgba(255, 255, 255, 0.4)"
+      : props.isValid
+      ? "papayawhip"
+      : "aliceblue"};
   color: ${(props) => (props.isUsed ? "white" : "black")};
   text-wrap: nowrap;
+  cursor: ${(props) => (props.isUsed || props.isBonus ? "auto" : "pointer")};
 `;
 
 const ProtocolValue = styled.div`
-  padding: 0.5em;
+  padding: 0.3em;
   border: 1px solid aliceblue;
-  border-radius: 5px;
+  // border-radius: 5px;
   grid-column-start: 2;
   text-align: end;
   align-self: center;
@@ -125,7 +134,13 @@ const Yatzy = ({
                     obj.isUsed &&
                     obj.total === 0
                   }
+                  isValid={obj.currentSum > 0}
                   isUsed={obj.isUsed}
+                  onClick={
+                    obj.disabled === true
+                      ? null
+                      : onProtocolValueClick.bind(this, obj)
+                  }
                 >{`${obj.name}: `}</ProtocolKey>
                 <ProtocolValue
                   onClick={
@@ -167,12 +182,23 @@ const Yatzy = ({
             }}
           >
             <Button
-              variant="contained"
               onClick={rollDices}
               disabled={availableRolls === 0 || gameFinished}
               fullWidth={true}
+              sx={{
+                padding: "0.5em 1.5em",
+                background: "purple",
+                color: "#c0c0c0",
+                "&.Mui-disabled": {
+                  background: "#eaeaea",
+                  color: "#c0c0c0",
+                },
+                "&:hover": {
+                  background: "papayawhip",
+                },
+              }}
             >
-              {`Roll dices (${availableRolls})`}
+              {`Rolls (${availableRolls})`}
             </Button>
           </div>
         </Wrapper>
@@ -182,7 +208,19 @@ const Yatzy = ({
             <div
               style={{ marginBottom: "20px" }}
             >{`🏆 Well played! You scored: ${total} 🎯`}</div>
-            <Button variant="contained" onClick={newGameHandler}>
+            <Button
+              sx={{
+                padding: "0.5em 1.5em",
+                background: "transparent",
+                color: "purple",
+                border: "1px solid purple ",
+                "&:hover": {
+                  border: "1px solid papayaWhip",
+                  color: "papayaWhip",
+                },
+              }}
+              onClick={newGameHandler}
+            >
               {"New game"}
             </Button>
           </div>

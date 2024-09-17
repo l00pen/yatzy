@@ -32,12 +32,21 @@ const DiceFace = ({ value, shouldReRoll, onClick }) => {
         borderRadius: '8px', // Rounded corners like a dice
         padding: '8px',
         margin: '2px',
+        ":hover": {
+          cursor: 'pointer',
+          backgroundColor: shouldReRoll ? 'papayawhip' : '#430043',
+          borderColor: shouldReRoll ? 'papayawhip' : '#430043',
+        },
       }}
       onClick={onClick}
     >
       {dicePatterns[value].map((dot, index) => { 
         return (
-        <Box key={`${value}-${index}`} sx={dot ? dotStyle : {}} style={{ backgroundColor: dot ? shouldReRoll ? "#430043" : "papayawhip" : 'none'}}  />
+        <Box 
+          key={`${value}-${index}`} 
+          sx={dot ? dotStyle : {}} 
+          style={{ backgroundColor: dot ? shouldReRoll ? "#430043" : "papayawhip" : 'none'}}
+        />
       )})}
     </Box>
   );

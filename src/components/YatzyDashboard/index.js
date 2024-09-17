@@ -6,15 +6,16 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 
 const Container = styled.div`
-  background-color: rgba(255, 255, 255, 0.5);
+  // background-color: rgba(255, 255, 255, 0.5);
   margin-top: 8px;
   margin-bottom: 8px;
   margin-left: 8px;
   display: flex;
   justify-content: space-between;
-  border-radius: 10px;
-  border: 1px solid #fff;
-  padding: 0.7em;
+  // border-radius: 10px;
+  // border: 1px solid #fff;
+  padding: 0.4em;
+  color: white;
 `;
 
 const YatzyDashboard = ({
@@ -35,12 +36,7 @@ const YatzyDashboard = ({
   }, [gameFinished]);
 
   return (
-    <Box style={{ marginTop: "20px" }}>
-      <div style={{ display: "flex", justifyContent: "flex-end" }}>
-        <Button variant="outlined" onClick={newGameHandler}>
-          {"New game"}
-        </Button>
-      </div>
+    <Box style={{}}>
       <div
         style={{
           display: "flex",
@@ -53,9 +49,31 @@ const YatzyDashboard = ({
         >
           Yatzy
         </div>
-        <div style={{ display: "flex", justifyContent: "flex-end" }}>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "flex-end",
+            alignItems: "center",
+          }}
+        >
           <Container>{`Score: ${total}`}</Container>
           <Container>{`Best: ${highScore}`}</Container>
+          <Button
+            onClick={newGameHandler}
+            sx={{
+              padding: "0.5em 1.5em",
+              background: "transparent",
+              color: "purple",
+              border: "1px solid purple ",
+              marginLeft: "8px",
+              "&:hover": {
+                border: "1px solid papayaWhip",
+                color: "papayaWhip",
+              },
+            }}
+          >
+            {"New game"}
+          </Button>
         </div>
       </div>
     </Box>

@@ -127,10 +127,10 @@ const Yatzy = ({
         <Protocol>
           {protocol.map((obj) => {
             return (
-              <React.Fragment key={obj.label}>
+              <React.Fragment key={obj.id}>
                 <ProtocolKey
                   isBonusMissed={
-                    (obj.label === "bonus" || obj.label === "yatzyBonus") &&
+                    (obj.id === "bonus" || obj.id === "yatzyBonus") &&
                     obj.isUsed &&
                     obj.total === 0
                   }
@@ -151,9 +151,9 @@ const Yatzy = ({
                   isUsed={obj.isUsed}
                   isValid={obj.currentSum > 0}
                   disabled={obj.disabled}
-                  isBonus={obj.label === "bonus" || obj.label === "yatzyBonus"}
+                  isBonus={obj.id === "bonus" || obj.id === "yatzyBonus"}
                   isBonusMissed={
-                    (obj.label === "bonus" || obj.label === "yatzyBonus") &&
+                    (obj.id === "bonus" || obj.id === "yatzyBonus") &&
                     obj.isUsed &&
                     obj.total === 0
                   }

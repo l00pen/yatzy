@@ -45,7 +45,6 @@ const getBonus = (protocol) => {
 
   return {
     ...protocol.bonus,
-    label: "bonus",
     currentSum,
     total,
     isUsed,
@@ -56,14 +55,12 @@ const getYatzyBonus = (protocol) => {
   if (protocol["yatzy"].isUsed) {
     return {
       ...protocol.yatzyBonus,
-      label: "yatzyBonus",
       isUsed: true,
       total: protocol["yatzy"].total > 0 ? 100 : 0,
     };
   }
   return {
     ...protocol.yatzyBonus,
-    label: "yatzyBonus",
     currentSum: 0,
   };
 };
@@ -84,14 +81,14 @@ const getCurrentProtocol = createSelector(
         const currentSum = calculateSum(item.sumRule, combintationHelper);
         return {
           ...item,
-          label: key,
+
           isValid: isValid,
           currentSum: isValid ? currentSum : 0,
         };
       }
       return {
         ...item,
-        label: key,
+        currentSum: 0,
       };
     });
   }

@@ -9,6 +9,7 @@ export const UPPER_SECTION = [
 
 const protocolInitial = {
   ones: {
+    id: "ones",
     name: "Ones",
     total: 0,
     currentSum: 0,
@@ -17,6 +18,7 @@ const protocolInitial = {
     sumRule: "sumExact:1",
   },
   twos: {
+    id: "twos",
     name: "Twos",
     total: 0,
     currentSum: 0,
@@ -25,6 +27,7 @@ const protocolInitial = {
     sumRule: "sumExact:2",
   },
   threes: {
+    id: "threes",
     name: "Threes",
     total: 0,
     currentSum: 0,
@@ -33,6 +36,7 @@ const protocolInitial = {
     sumRule: "sumExact:3",
   },
   fours: {
+    id: "fours",
     name: "Fours",
     total: 0,
     currentSum: 0,
@@ -41,6 +45,7 @@ const protocolInitial = {
     sumRule: "sumExact:4",
   },
   fives: {
+    id: "fives",
     name: "Fives",
     total: 0,
     currentSum: 0,
@@ -49,6 +54,7 @@ const protocolInitial = {
     sumRule: "sumExact:5",
   },
   sixes: {
+    id: "sixes",
     name: "Sixes",
     total: 0,
     currentSum: 0,
@@ -57,6 +63,7 @@ const protocolInitial = {
     sumRule: "sumExact:6",
   },
   bonus: {
+    id: "bonus",
     total: 0,
     currentSum: 0,
     isUsed: false,
@@ -64,6 +71,7 @@ const protocolInitial = {
     disabled: true,
   },
   onePair: {
+    id: "onePair",
     total: 0,
     currentSum: 0,
     isUsed: false,
@@ -72,6 +80,7 @@ const protocolInitial = {
     sumRule: "sumXOfAKind:2",
   },
   twoPairs: {
+    id: "twoPairs",
     total: 0,
     currentSum: 0,
     isUsed: false,
@@ -80,6 +89,7 @@ const protocolInitial = {
     sumRule: "sumTwoPairs", // TODO something fischy when 4 of a kind
   },
   threeOfAKind: {
+    id: "threeOfAKind",
     total: 0,
     currentSum: 0,
     isUsed: false,
@@ -88,6 +98,7 @@ const protocolInitial = {
     sumRule: "sumXOfAKind:3",
   },
   fourOfAKind: {
+    id: "fourOfAKind",
     total: 0,
     currentSum: 0,
     isUsed: false,
@@ -96,6 +107,7 @@ const protocolInitial = {
     sumRule: "sumXOfAKind:4",
   },
   smallStraight: {
+    id: "smallStraight",
     total: 0,
     currentSum: 0,
     isUsed: false,
@@ -104,6 +116,7 @@ const protocolInitial = {
     sumRule: "sumSmallStraight",
   },
   largeStraight: {
+    id: "largeStraight",
     total: 0,
     currentSum: 0,
     isUsed: false,
@@ -112,6 +125,7 @@ const protocolInitial = {
     sumRule: "sumLargeStraight",
   },
   fullHouse: {
+    id: "fullHouse",
     total: 0,
     currentSum: 0,
     isUsed: false,
@@ -120,6 +134,7 @@ const protocolInitial = {
     sumRule: "sumFullHouse",
   },
   chance: {
+    id: "chance",
     total: 0,
     currentSum: 0,
     isUsed: false,
@@ -128,6 +143,7 @@ const protocolInitial = {
     sumRule: "sumChance",
   },
   yatzy: {
+    id: "yatzy",
     total: 0,
     currentSum: 0,
     isUsed: false,
@@ -136,6 +152,7 @@ const protocolInitial = {
     sumRule: "sumXOfAKind:5",
   },
   yatzyBonus: {
+    id: "yatzyBonus",
     total: 0,
     isUsed: false,
     name: "Bonus",
@@ -262,14 +279,15 @@ const protocol = (state = protocolInitial, action) => {
     case "YATZY_NEW_GAME":
       return protocolInitial;
     case "YATZY_SET_PROTOCOL_ITEM_SUM":
-      const { label, currentSum, isUsed } = action.data;
+      const { id, currentSum, isUsed } = action.data;
       if (!isUsed) {
-        const obj = { ...state[label] };
-        obj.total = currentSum;
-        obj.isUsed = true;
         return {
           ...state,
-          [label]: obj,
+          [id]: {
+            ...action.data,
+            isUsed: true,
+            total: currentSum,
+          },
         };
       }
       return state;

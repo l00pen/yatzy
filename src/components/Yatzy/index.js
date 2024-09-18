@@ -137,14 +137,14 @@ const Yatzy = ({
                   isValid={obj.currentSum > 0}
                   isUsed={obj.isUsed}
                   onClick={
-                    obj.disabled === true
+                    obj.disabled === true || obj.isUsed
                       ? null
                       : onProtocolValueClick.bind(this, obj)
                   }
                 >{`${obj.name}: `}</ProtocolKey>
                 <ProtocolValue
                   onClick={
-                    obj.disabled === true
+                    obj.disabled === true || obj.isUsed
                       ? null
                       : onProtocolValueClick.bind(this, obj)
                   }

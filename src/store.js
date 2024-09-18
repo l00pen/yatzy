@@ -12,8 +12,6 @@ const middlewares = [thunk];
 
 let store;
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-
 export default {
   get(initialState = {}) {
     if (!store) {

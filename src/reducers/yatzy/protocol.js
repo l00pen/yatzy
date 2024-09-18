@@ -257,14 +257,10 @@ export const calculateSum = (rule, dices) => {
   return 0;
 };
 
-const initialState = () => {
-  return { ...protocolInitial };
-};
-
-const protocol = (state = initialState(), action) => {
+const protocol = (state = protocolInitial, action) => {
   switch (action.type) {
     case "YATZY_NEW_GAME":
-      return initialState();
+      return protocolInitial;
     case "YATZY_SET_PROTOCOL_ITEM_SUM":
       const { label, currentSum, isUsed } = action.data;
       if (!isUsed) {
@@ -276,13 +272,10 @@ const protocol = (state = initialState(), action) => {
           [label]: obj,
         };
       }
-      return {
-        ...state,
-      };
+      return state;
     default:
       return state;
   }
-  return state;
 };
 
 export default protocol;

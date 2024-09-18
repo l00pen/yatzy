@@ -5,7 +5,6 @@ import {
 
 const initialState = 0;
 const highScore = (state = initialState, action) => {
-  console.log("highScore", state, action);
   switch (action.type) {
     case "YATZY_NEW_GAME":
       return loadLocalStorage("yatzyHighScore") || initialState;

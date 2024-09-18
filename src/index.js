@@ -21,7 +21,6 @@ const theme = createTheme({});
 const persistedYatzyHighscore = loadLocalStorage("yatzyHighScore");
 const persistedMaxiHighscore = loadLocalStorage("maxiYatzyHighScore");
 const persistedIsMaxiYatzy = loadLocalStorage("isMaxiYatzy") === true;
-console.log("persistedIsMaxiYatzy", persistedIsMaxiYatzy);
 const store = Store.get({
   yatzyReducer: {
     highScore: persistedIsMaxiYatzy

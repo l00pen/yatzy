@@ -93,8 +93,17 @@ const TWO_PAIRS_PROTOCOL_ITEM = {
   currentSum: 0,
   isUsed: false,
   name: "Two Pairs",
-  validationRule: "twoPairs", // TODO something fischy when 4 of a kind
-  sumRule: "sumTwoPairs", // TODO something fischy when 4 of a kind
+  validationRule: "twoPairs",
+  sumRule: "sumTwoPairs",
+};
+const THREE_PAIRS_PROTOCOL_ITEM = {
+  id: "threePairs",
+  total: 0,
+  currentSum: 0,
+  isUsed: false,
+  name: "Three Pairs",
+  validationRule: "threePairs",
+  sumRule: "sumThreePairs",
 };
 const THREE_OF_A_KIND_PROTOCOL_ITEM = {
   id: "threeOfAKind",
@@ -159,6 +168,24 @@ const FULL_HOUSE_PROTOCOL_ITEM = {
   validationRule: "fullHouse",
   sumRule: "sumFullHouse",
 };
+const HOUSE_PROTOCOL_ITEM = {
+  id: "house",
+  total: 0,
+  currentSum: 0,
+  isUsed: false,
+  name: "House",
+  validationRule: "house",
+  sumRule: "sumHouse",
+};
+const TOWER_PROTOCOL_ITEM = {
+  id: "tower",
+  total: 0,
+  currentSum: 0,
+  isUsed: false,
+  name: "Tower",
+  validationRule: "tower",
+  sumRule: "sumTower",
+};
 const CHANCE_PROTOCOL_ITEM = {
   id: "chance",
   total: 0,
@@ -183,6 +210,24 @@ const YATZY_BONUS_PROTOCOL_ITEM = {
   isUsed: false,
   name: "Bonus",
   disabled: true,
+  currentSum: 0,
+};
+const MAXI_YATZY_PROTOCOL_ITEM = {
+  id: "maxiYatzy",
+  total: 0,
+  currentSum: 0,
+  isUsed: false,
+  name: "Maxi Yatzy",
+  validationRule: "xOfAKind:6",
+  sumRule: "sumXOfAKind:6",
+};
+const MAXI_YATZY_BONUS_PROTOCOL_ITEM = {
+  id: "maxiYatzyBonus",
+  total: 0,
+  isUsed: false,
+  name: "Bonus",
+  disabled: true,
+  currentSum: 0,
 };
 
 export const protocolInitial = {
@@ -221,23 +266,37 @@ export const validate = (rule, dices) => {
     return highestValueIndex >= 0;
   } else if (type === "twoPairs") {
     const overTwo = dices.reduce((mem, obj) => {
-      if (obj >= 2) {
+      if (obj >= 4) {
+        mem = mem + 1;
+      } else if (obj >= 2) {
         mem = mem + 1;
       }
       return mem;
     }, 0);
     return overTwo >= 2;
+  } else if (type === "threePairs") {
+    const overTwo = dices.reduce((mem, obj) => {
+      if (obj >= 6) {
+        mem = mem + 3;
+      } else if (obj >= 4) {
+        mem = mem + 2;
+      } else if (obj >= 2) {
+        mem = mem + 1;
+      }
+      return mem;
+    }, 0);
+    return overTwo >= 3;
   } else if (type === "smallStraight") {
     const at = dices.slice(0, dices.length - 1);
-    const tmp = at.filter((n) => n !== 1);
+    const tmp = at.filter((n) => n === 0);
     return tmp.length === 0;
   } else if (type === "largeStraight") {
     const at = dices.slice(1);
-    const tmp = at.filter((n) => n !== 1);
+    const tmp = at.filter((n) => n === 0);
     return tmp.length === 0;
   } else if (type === "fullStraight") {
     const at = dices.slice(0, dices.length - 1);
-    const tmp = at.filter((n) => n !== 1);
+    const tmp = dices.filter((n) => n === 0);
     return tmp.length === 0;
   } else if (type === "true") {
     return true;
@@ -253,6 +312,15 @@ export const validate = (rule, dices) => {
       }
     });
     return hasFoundTwo && hasFoundThree;
+  } else if (type === "house") {
+    const hasFoundSix = dices.filter((n) => n == 6);
+    const count = dices.filter((n) => n >= 3);
+    return hasFoundSix.length > 1 || count.length === 2;
+  } else if (type === "tower") {
+    const hasFoundSix = dices.filter((n) => n == 6);
+    const hasFoundFour = dices.filter((n) => n >= 4);
+    const hasFoundTwo = dices.filter((n) => n >= 2);
+    return hasFoundSix.length || (hasFoundFour.length && hasFoundTwo.length);
   }
 
   return false;
@@ -294,6 +362,37 @@ export const calculateSum = (rule, dices) => {
 
       return idx1 * 2 + idx2 * 2;
     }
+  } else if (type === "sumThreePairs") {
+    let allOfSame = false;
+    let pairOfSame = false;
+    const pairArray = dices.reduce((mem, obj, idx) => {
+      if (obj >= 6) {
+        mem.push((idx + 1) * 6);
+        allOfSame = true;
+        return mem;
+      }
+      if (obj >= 4) {
+        mem.push((idx + 1) * 4);
+        pairOfSame = true;
+        return mem;
+      }
+      if (obj >= 2) {
+        mem.push((idx + 1) * 2);
+      }
+      return mem;
+    }, []);
+
+    if (allOfSame) {
+      return pairArray.pop();
+    }
+
+    if (pairOfSame) {
+      return pairArray.pop() + pairArray.pop();
+    }
+
+    if (pairArray.length >= 3) {
+      return pairArray.pop() + pairArray.pop() + pairArray.pop();
+    }
   } else if (type === "sumSmallStraight") {
     return 15;
   } else if (type === "sumLargeStraight") {
@@ -321,6 +420,26 @@ export const calculateSum = (rule, dices) => {
     if (!!idx1 && !!idx2) {
       return idx1 * 3 + idx2 * 2;
     }
+  } else if (type === "sumHouse") {
+    return dices.reduce((mem, obj, idx) => {
+      if (obj >= 6) {
+        mem = mem + (idx + 1) * 6;
+      } else if (obj >= 3) {
+        mem = mem + (idx + 1) * 3;
+      }
+      return mem;
+    });
+  } else if (type === "sumTower") {
+    return dices.reduce((mem, obj, idx) => {
+      if (obj === 6) {
+        mem = mem + (idx + 1) * 6;
+      } else if (obj === 4) {
+        mem = mem + (idx + 1) * 4;
+      } else if (obj === 2) {
+        mem = mem + (idx + 1) * 2;
+      }
+      return mem;
+    });
   }
   return 0;
 };
@@ -335,17 +454,19 @@ export const maxiYatzyProtocolInitial = {
   maxiBonus: MAXI_BONUS_PROTOCOL_ITEM,
   onePair: ONE_PAIR_PROTOCOL_ITEM,
   twoPairs: TWO_PAIRS_PROTOCOL_ITEM,
+  threePairs: THREE_PAIRS_PROTOCOL_ITEM,
   threeOfAKind: THREE_OF_A_KIND_PROTOCOL_ITEM,
   fourOfAKind: FOUR_OF_A_KIND_PROTOCOL_ITEM,
   fiveOfAKind: FIVE_OF_A_KIND_PROTOCOL_ITEM,
-  smallStraight: SMALL_STRAIGHT_PROTOCOL_ITEM,
+  smallStraight: SMALL_STRAIGHT_PROTOCOL_ITEM, // somethings of for combo: 1, 1, 2, 1, 1, 0
   largeStraight: LARGE_STRAIGHT_PROTOCOL_ITEM,
   fullStraight: FULL_STRAIGHT_PROTOCOL_ITEM,
   fullHouse: FULL_HOUSE_PROTOCOL_ITEM,
-  // house
-  // tower
+  house: HOUSE_PROTOCOL_ITEM,
+  tower: TOWER_PROTOCOL_ITEM,
   chance: CHANCE_PROTOCOL_ITEM,
-  // maxiYatzy
+  maxiYatzy: MAXI_YATZY_PROTOCOL_ITEM,
+  maxiYatzyBonus: MAXI_YATZY_BONUS_PROTOCOL_ITEM,
 };
 
 const protocol = (state = protocolInitial, action) => {

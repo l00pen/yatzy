@@ -10,6 +10,7 @@ const getProtocol = (state) => {
 };
 
 const getCurrentRoundCombination = createSelector([getDices], (dices) => {
+  // return [2, 0, 0, 0, 0, 4];
   const cb = [0, 0, 0, 0, 0, 0];
   dices.forEach(({ value }) => {
     ++cb[value];
@@ -95,10 +96,17 @@ const getYatzyBonus = (protocol) => {
       total: protocol["yatzy"].total > 0 ? 100 : 0,
     };
   }
-  return {
-    ...protocol.yatzyBonus,
-    currentSum: 0,
-  };
+  return protocol.yatzyBonus;
+};
+const getMaxiYatzyBonus = (protocol) => {
+  if (protocol["maxiYatzy"].isUsed) {
+    return {
+      ...protocol.maxiYatzyBonus,
+      isUsed: true,
+      total: protocol["maxiYatzy"].total > 0 ? 100 : 0,
+    };
+  }
+  return protocol.maxiYatzyBonus;
 };
 
 const getCurrentProtocol = createSelector(
@@ -114,6 +122,9 @@ const getCurrentProtocol = createSelector(
       }
       if (key === "maxiBonus") {
         return getMaxiBonus(protocol);
+      }
+      if (key === "maxiYatzyBonus") {
+        return getMaxiYatzyBonus(protocol);
       }
       if (!item.used) {
         const isValid = validate(item.validationRule, combintationHelper);

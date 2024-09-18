@@ -18,8 +18,9 @@ const getCurrentRoundCombination = createSelector([getDices], (dices) => {
 });
 
 const getBonus = (protocol) => {
+  const BONUS_TRESHOLD = 63;
   let total = 0;
-  let currentSum = -63;
+  let currentSum = -BONUS_TRESHOLD;
   let isUsed = false;
 
   const currentTotal = UPPER_SECTION.reduce((mem, key) => {
@@ -30,9 +31,9 @@ const getBonus = (protocol) => {
     return mem && protocol[key].isUsed;
   }, true);
 
-  if (allUpperHaveBeenUsed || currentTotal >= 63) {
+  if (allUpperHaveBeenUsed || currentTotal >= BONUS_TRESHOLD) {
     isUsed = true;
-    if (currentTotal >= 63) {
+    if (currentTotal >= BONUS_TRESHOLD) {
       total = 50;
     } else {
       total = 0;
@@ -45,6 +46,41 @@ const getBonus = (protocol) => {
 
   return {
     ...protocol.bonus,
+    currentSum,
+    total,
+    isUsed,
+  };
+};
+
+const getMaxiBonus = (protocol) => {
+  const BONUS_TRESHOLD = 75;
+  let total = 0;
+  let currentSum = -BONUS_TRESHOLD;
+  let isUsed = false;
+
+  const currentTotal = UPPER_SECTION.reduce((mem, key) => {
+    return mem + protocol[key].total;
+  }, 0);
+
+  const allUpperHaveBeenUsed = UPPER_SECTION.reduce((mem, key) => {
+    return mem && protocol[key].isUsed;
+  }, true);
+
+  if (allUpperHaveBeenUsed || currentTotal >= BONUS_TRESHOLD) {
+    isUsed = true;
+    if (currentTotal >= BONUS_TRESHOLD) {
+      total = 50;
+    } else {
+      total = 0;
+    }
+  }
+
+  if (!isUsed) {
+    currentSum = currentSum + currentTotal;
+  }
+
+  return {
+    ...protocol.maxiBonus,
     currentSum,
     total,
     isUsed,
@@ -75,6 +111,9 @@ const getCurrentProtocol = createSelector(
       }
       if (key === "yatzyBonus") {
         return getYatzyBonus(protocol);
+      }
+      if (key === "maxiBonus") {
+        return getMaxiBonus(protocol);
       }
       if (!item.used) {
         const isValid = validate(item.validationRule, combintationHelper);

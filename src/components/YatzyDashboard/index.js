@@ -24,16 +24,22 @@ const YatzyDashboard = ({
   highScore,
   gameFinished,
   gameFinishedHandler,
+  isMaxiYatzy,
+  onMaxiYatzyClick,
 }) => {
   const newGameHandler = () => {
-    onNewGameClick();
+    onNewGameClick(isMaxiYatzy);
   };
 
   React.useEffect(() => {
     if (gameFinished) {
-      gameFinishedHandler(total);
+      gameFinishedHandler(total, isMaxiYatzy);
     }
   }, [gameFinished]);
+
+  const onMaxiYatzyClickHandler = () => {
+    onMaxiYatzyClick(isMaxiYatzy);
+  };
 
   return (
     <Box style={{}}>
@@ -74,6 +80,24 @@ const YatzyDashboard = ({
           >
             {"New game"}
           </Button>
+          <Button
+            onClick={onMaxiYatzyClickHandler}
+            sx={{
+              padding: "0.5em 1.5em",
+              background: "transparent",
+              color: isMaxiYatzy ? "purple" : "papayawhip",
+              border: isMaxiYatzy
+                ? "1px solid purple "
+                : "1px solid papayawhip",
+              marginLeft: "8px",
+              "&:hover": {
+                border: "1px solid papayaWhip",
+                color: "papayaWhip",
+              },
+            }}
+          >
+            {"MAXI YATZY"}
+          </Button>
         </div>
       </div>
     </Box>
@@ -81,28 +105,47 @@ const YatzyDashboard = ({
 };
 
 const mapStateToProps = (state) => {
-  const { yatzyReducer: yatzyState } = state;
+  const { yatzyReducer: yatzyState, isMaxiYatzy } = state;
   return {
     ...yatzyState,
     total: getTotal(yatzyState),
     gameFinished: getIsGameFinished(yatzyState),
+    isMaxiYatzy,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onNewGameClick: () => {
-      dispatch({
-        type: "YATZY_NEW_GAME",
-      });
+    onNewGameClick: (isMaxiYatzy) => {
+      isMaxiYatzy
+        ? dispatch({ type: "MAXI_YATZY_NEW_GAME" })
+        : dispatch({
+            type: "YATZY_NEW_GAME",
+          });
     },
-    gameFinishedHandler: (total) => {
+    gameFinishedHandler: (total, isMaxiYatzy) => {
       dispatch({
         type: "YATZY_GAME_FINISHED",
         data: {
           total,
+          isMaxiYatzy,
         },
       });
+    },
+    onMaxiYatzyClick: (isMaxiYatzy) => {
+      const newIsMaxiYatzy = !isMaxiYatzy;
+      dispatch({
+        type: "YATZY_TOGGLE_MAXI_YATZY",
+        data: {
+          isMaxiYatzy: newIsMaxiYatzy,
+        },
+      });
+
+      if (newIsMaxiYatzy) {
+        dispatch({ type: "MAXI_YATZY_NEW_GAME" });
+      } else {
+        dispatch({ type: "YATZY_NEW_GAME" });
+      }
     },
   };
 };

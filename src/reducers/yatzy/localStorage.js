@@ -1,6 +1,6 @@
-export const loadHighScore = () => {
+export const loadLocalStorage = (key) => {
   try {
-    const serializedState = localStorage.getItem("highScore");
+    const serializedState = localStorage.getItem(key);
     if (serializedState === null) {
       return undefined;
     }
@@ -10,10 +10,10 @@ export const loadHighScore = () => {
   }
 };
 
-export const saveHighScore = (highScore) => {
+export const saveLocalStorage = (key, data) => {
   try {
-    const serializedHighScore = JSON.stringify(highScore);
-    localStorage.setItem("highScore", serializedHighScore);
+    const serializedData = JSON.stringify(data);
+    localStorage.setItem(key, serializedData);
   } catch (err) {
     console.log("Something happened with saveState", err);
   }

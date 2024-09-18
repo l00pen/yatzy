@@ -110,10 +110,11 @@ const Yatzy = ({
   setProtocolItemSum,
   protocol,
   gameFinished,
+  isMaxiYatzy,
   onNewGameClick,
 }) => {
   const newGameHandler = () => {
-    onNewGameClick();
+    onNewGameClick(isMaxiYatzy);
   };
   const diceClickHandler = (id) => toggleDice(id);
   const onProtocolValueClick = (obj) => {
@@ -130,9 +131,11 @@ const Yatzy = ({
               <React.Fragment key={obj.id}>
                 <ProtocolKey
                   isBonusMissed={
-                    (obj.id === "bonus" || obj.id === "yatzyBonus") &&
+                    (obj.id === "bonus" ||
+                      obj.id === "yatzyBonus" ||
+                      obj.id === "maxiBonus") &&
                     obj.isUsed &&
-                    obj.total === 0
+                    obj.total === 0 // Simplify the condition
                   }
                   isValid={obj.currentSum > 0}
                   isUsed={obj.isUsed}
@@ -151,9 +154,15 @@ const Yatzy = ({
                   isUsed={obj.isUsed}
                   isValid={obj.currentSum > 0}
                   disabled={obj.disabled}
-                  isBonus={obj.id === "bonus" || obj.id === "yatzyBonus"}
+                  isBonus={
+                    obj.id === "bonus" ||
+                    obj.id === "yatzyBonus" ||
+                    obj.id === "maxiBonus"
+                  }
                   isBonusMissed={
-                    (obj.id === "bonus" || obj.id === "yatzyBonus") &&
+                    (obj.id === "bonus" ||
+                      obj.id === "yatzyBonus" ||
+                      obj.id === "maxiBonus") &&
                     obj.isUsed &&
                     obj.total === 0
                   }
@@ -230,22 +239,24 @@ const Yatzy = ({
   );
 };
 
-const mapStateToProps = ({ yatzyReducer: state }) => {
-  console.log(state);
+const mapStateToProps = ({ yatzyReducer: state, isMaxiYatzy }) => {
   return {
     ...state,
     protocol: getCurrentProtocol(state),
     total: getTotal(state),
     gameFinished: getIsGameFinished(state),
+    isMaxiYatzy,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onNewGameClick: () => {
-      dispatch({
-        type: "YATZY_NEW_GAME",
-      });
+    onNewGameClick: (isMaxiYatzy) => {
+      isMaxiYatzy
+        ? dispatch({ type: "MAXI_YATZY_NEW_GAME" })
+        : dispatch({
+            type: "YATZY_NEW_GAME",
+          });
     },
     rollDices: () => {
       dispatch({

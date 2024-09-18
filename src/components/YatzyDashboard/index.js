@@ -48,6 +48,7 @@ const YatzyDashboard = ({
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
+          flexWrap: "wrap",
         }}
       >
         <div
